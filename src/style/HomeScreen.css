@@ -1,0 +1,69 @@
+.home-container {
+    display: flex;
+    min-height: 100vh;
+    margin: auto;
+    width: 100vh;
+    gap: 1rem;
+}
+
+.sidebar {
+    position: fixed;
+    left: 2rem;
+    width: 12em;
+    height: 80%;
+    background-color: #f0f0f0;
+    box-shadow: 2px 0px 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    border-radius: 20px;
+}
+
+.main-content {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 88vh;
+}
+.title-content{
+    font-weight: bold;
+    font-size:xx-large;
+    margin-bottom: 0.5em;
+    color: rgb(255, 255, 255);
+}
+
+.add-topic-button {
+    right: 2rem;
+    position: fixed;
+    width: 150px;
+    background-color: #646cff;
+    color: white;
+    border-radius: 8px;
+    padding: 0.8rem 1.6rem;
+    font-size: 1rem;
+    font-weight: 500;
+    transition: background-color 0.3s ease;
+}
+
+.add-topic-button:hover {
+    background-color: #535bf2;
+}
+
+.scrollable-box {
+    width: 100%;
+    max-width: 800px;
+    border-radius: 16px;
+    overflow-y: auto;
+    height: 100%;
+
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.scrollable-box::-webkit-scrollbar {
+    display: none;
+}
