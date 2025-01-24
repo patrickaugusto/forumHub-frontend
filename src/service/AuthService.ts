@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = "http://localhost:1234/auth";
+const API_URL = "https://forumhub-production.up.railway.app/auth";
 
 export interface LoginRequest {
   email: string;
