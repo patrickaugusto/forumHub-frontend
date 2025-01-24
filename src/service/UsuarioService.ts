@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const USUARIO_API_URL = "http://localhost:1234/usuarios";
+const USUARIO_API_URL = "https://forumhub-production.up.railway.app/usuarios";
 
 export interface UsuarioResponse {
   id: number;
