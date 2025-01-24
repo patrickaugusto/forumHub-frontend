@@ -1,83 +1,95 @@
 import React, { useEffect, useState } from "react";
-import AdicionarTopico from "../components/ui/modal";
+import AdicionarTopico from "../components/modal/TopicoModal";
 import TopicoService, { TopicoResponse } from "../service/TopicoService";
-import { Box, VStack, Text, HStack, Spinner, Center } from "@chakra-ui/react";
-import { Divider } from "@chakra-ui/layout"
+import { Box, VStack, Text, Spinner, HStack, Flex } from "@chakra-ui/react";
+import {
+  PaginationItems,
+  PaginationNextTrigger,
+  PaginationPrevTrigger,
+  PaginationRoot,
+} from "../components/ui/pagination";
 import "../style/HomeScreen.css";
+import Navbar from '../components/nav/NavBar';
+import { TopicoCard } from "../components/cards/TopicoCard";
+
+const pageSize = 10;
 
 const Home = () => {
   const [topicos, setTopicos] = useState<TopicoResponse[]>([]);
   const [loading, setLoading] = useState(true);
+  const [page, setPage] = useState(1);
+  const [totalTopicos, setTotalTopicos] = useState(0);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  const fetchTopicos = async (currentPage: number) => {
+    setLoading(true);
+    try {
+      const data = await TopicoService.listarTopicos(
+        currentPage - 1,
+        pageSize,
+        "dataCriacao,desc"
+      );
+      setTopicos(data.content);
+      setTotalTopicos(data.totalElements);
+    } catch (error) {
+      console.error("Erro ao buscar tópicos:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-    const fetchTopicos = async () => {
-      try {
-        const data = await TopicoService.listarTopicos(0, 10, "dataCriacao,desc");
-        setTopicos(data.content);
-      } catch (error) {
-        console.error("Erro ao buscar tópicos:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchTopicos();
+    const token = localStorage.getItem("token");
+    setIsLoggedIn(!!token);
   }, []);
 
+  useEffect(() => {
+    fetchTopicos(page);
+  }, [page]);
+
   return (
-    <HStack className="home-container" gap="4">
-      {/* Sidebar */}
-      <Box className="sidebar">
-        <Text fontWeight="bold" fontSize="lg" mb="4" color="gray.700">
-          Navegação
-        </Text>
-        <Text fontSize="sm" color="gray.600">
-          Opções do menu podem ir aqui.
-        </Text>
-      </Box>
+    <>
+      <Navbar />
+      <Box className="home-container" gap="4">
 
-      {/* Main Content */}
-      <Box className="main-content">
-        <Text className="title-content">
-          Tópicos Recentes
-        </Text>
-        <Box className="scrollable-box" borderRadius="xl">
+        {/* Main Content */}
+        <Box className="main-content">
+          <Box className="scrollable-box" borderRadius="xl" mb={5}>
+            {loading ? (
+              <Flex justifyContent="center" h="100%">
+                <Spinner size="lg" color="blue.500" />
+              </Flex>
+            ) : (
+              <VStack gap="6" align="stretch">
+                {topicos.map((topico) => (
+                  <TopicoCard key={topico.id} topico={topico} />
+                ))}
+              </VStack>
+            )}
+          </Box>
 
-          {loading ? (
-            <Spinner size="lg" color="blue.500" />
-          ) : (
-            <VStack gap="6" align="stretch">
-              {topicos.map((topico) => (
-                <Box
-                  key={topico.id}
-                  padding="6"
-                  bg="gray.50"
-                  borderRadius="md"
-                  boxShadow="base"
-                  _hover={{ boxShadow: "lg", bg: "gray.100" }}
-                  transition="all 0.2s"
-                >
-                  <Text fontWeight="bold" fontSize="xl" color="gray.800">
-                    {topico.titulo}
-                  </Text>
-                  <Text mt="2" color="gray.600">
-                    {topico.mensagem}
-                  </Text>
-                  <Text mt="4" fontSize="sm" color="gray.500">
-                    Criado em: {topico.dataCriacao}
-                  </Text>
-                </Box>
-              ))}
-            </VStack>
-          )}
+          {/* Paginação */}
+          <PaginationRoot
+            page={page}
+            count={totalTopicos}
+            pageSize={pageSize}
+            onPageChange={(e) => setPage(e.page)}
+          >
+            <HStack>
+              <PaginationPrevTrigger />
+              <PaginationItems />
+              <PaginationNextTrigger />
+            </HStack>
+          </PaginationRoot>
         </Box>
+        {/* Botão Adicionar Tópico */}
+        {isLoggedIn && (
+          <Box className="box-button">
+            <AdicionarTopico />
+          </Box>
+        )}
       </Box>
-
-      {/* Botão Adicionar Tópico */}
-      <Box position="absolute" top="2rem" right="2rem">
-        <AdicionarTopico />
-      </Box>
-    </HStack>
+    </>
   );
 };
 

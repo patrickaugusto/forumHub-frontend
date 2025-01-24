@@ -58,7 +58,7 @@ const RegisterForm: React.FC = () => {
               placeholder="fulano123"
             />
           </Field>
-          <Button type="submit" className="button-entrar">Entrar</Button>
+          <Button type="submit" className="button-cadastrar">Cadastrar</Button>
         </VStack>
       </form>
     </>

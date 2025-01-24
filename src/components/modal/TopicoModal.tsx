@@ -18,7 +18,6 @@ const AdicionarTopico = () => {
         <ModalContent className='modal_content'>
           <ModalHeader className='modal_header'>Adicionar Tópico</ModalHeader>
           <ModalBody pb={6} className='modal_body'>
-            {/* Formulário de Tópico */}
             <TopicoForm onClose={onClose} />
           </ModalBody>
         </ModalContent>

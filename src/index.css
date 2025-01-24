@@ -2,7 +2,7 @@
   --primary-color: #3b82f6; 
   --primary-hover: #2563eb;
   --text-color: #1f2937;
-  --background-color: #0c1f2c;
+  --background-color: #d0def5;
   --secondary-color: #64748b; 
 
   font-family: 'Inter', system-ui, Avenir, Helvetica, Arial, sans-serif;
@@ -14,14 +14,12 @@
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  -moz-osx-font-smoothing:var(--primary-color);
 }
 
 body {
   margin: 0;
   padding: 0;
-  min-width: 320px;
-  min-height: 100vh;
   background-color: var(--background-color);
   color: var(--text-color);
 }
@@ -38,29 +36,6 @@ a {
 }
 a:hover {
   color: var(--primary-hover);
-  text-decoration: underline;
-}
-
-button {
-  width: 50%;
-  color: #fff;
-  background-color: var(--primary-color);
-  border-radius: 8px;
-  border: none;
-  padding: 0.8em 1.5em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.2s ease;
-}
-button:hover {
-  background-color: var(--primary-hover);
-  transform: translateY(-2px); /* Efeito de elevação */
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto var(--primary-hover);
 }
 
 input, textarea {

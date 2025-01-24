@@ -20,7 +20,7 @@ const LoginForm: React.FC = () => {
             localStorage.setItem("token", response.token);
             localStorage.setItem("userId", String(response.id));
 
-            navigate("/home");
+            navigate("/");
         } catch (error: any) {
             console.error("Erro ao fazer login:", error);
             setErrorMessage("Credenciais inválidas. Tente novamente.");

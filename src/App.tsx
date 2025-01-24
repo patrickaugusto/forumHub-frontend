@@ -1,12 +1,12 @@
 import './App.css';
-import { HStack } from "@chakra-ui/react";
+import { VStack } from "@chakra-ui/react";
 import AppRoutes from './routes/Routes';
 
 function App() {
   return (
-      <HStack>
+      <VStack w={"100%"}>
         <AppRoutes />
-      </HStack>
+      </VStack>
   );
 }
 

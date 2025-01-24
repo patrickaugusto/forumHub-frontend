@@ -1,24 +1,9 @@
 .home-container {
     display: flex;
-    min-height: 100vh;
     margin: auto;
-    width: 100vh;
+    width: 100%;
     gap: 1rem;
-}
-
-.sidebar {
-    position: fixed;
-    left: 2rem;
-    width: 12em;
-    height: 80%;
-    background-color: #f0f0f0;
-    box-shadow: 2px 0px 10px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: flex-start;
-    border-radius: 20px;
+    padding: 2em;
 }
 
 .main-content {
@@ -27,18 +12,35 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    height: 88vh;
+    height: 50em;
 }
-.title-content{
-    font-weight: bold;
-    font-size:xx-large;
-    margin-bottom: 0.5em;
-    color: rgb(255, 255, 255);
+
+.coisas {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.scrollable-box {
+    width: 100%;
+    max-width: 800px;
+    border-radius: 16px;
+    overflow-y: auto;
+    height: 100%;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.scrollable-box::-webkit-scrollbar {
+    display: none;
+}
+
+.box-button {
+    height: auto;
+    margin-bottom: 2rem;
 }
 
 .add-topic-button {
-    right: 2rem;
-    position: fixed;
     width: 150px;
     background-color: #646cff;
     color: white;
@@ -53,17 +55,14 @@
     background-color: #535bf2;
 }
 
-.scrollable-box {
-    width: 100%;
-    max-width: 800px;
-    border-radius: 16px;
-    overflow-y: auto;
-    height: 100%;
 
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-}
+@media (max-width: 768px) {
+    .home-container {
+        flex-direction: column-reverse;
+        padding: 1em;
+    }
 
-.scrollable-box::-webkit-scrollbar {
-    display: none;
+    .box-button {
+        align-self: flex-start;
+    }
 }
