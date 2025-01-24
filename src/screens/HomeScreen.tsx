@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import AdicionarTopico from "../components/modal/TopicoModal";
 import TopicoService, { TopicoResponse } from "../service/TopicoService";
-import { Box, VStack, Text, Spinner, HStack, Flex } from "@chakra-ui/react";
+import { Box, VStack, Spinner, HStack, Flex } from "@chakra-ui/react";
 import {
   PaginationItems,
   PaginationNextTrigger,

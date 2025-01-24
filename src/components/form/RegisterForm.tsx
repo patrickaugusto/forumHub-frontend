@@ -1,7 +1,7 @@
-import React, { useState } from "react";
-import { Box, Button, Input, VStack, Heading } from "@chakra-ui/react";
+import React from "react";
+import { Button, Input, VStack} from "@chakra-ui/react";
 import { Field } from "../ui/field";
-import { FormControl, FormLabel } from "@chakra-ui/form-control"
+import { FormControl } from "@chakra-ui/form-control"
 import { useForm } from "react-hook-form";
 import AuthService, { RegisterRequest } from "../../service/AuthService";
 import { useNavigate } from "react-router-dom";
@@ -9,7 +9,7 @@ import { useNavigate } from "react-router-dom";
 const RegisterForm: React.FC = () => {
 
   const navigate = useNavigate();
-  const { register, handleSubmit, formState: { errors } } = useForm<RegisterRequest>();
+  const { register, handleSubmit } = useForm<RegisterRequest>();
 
   const onSubmit = async (data: RegisterRequest) => {
     try {

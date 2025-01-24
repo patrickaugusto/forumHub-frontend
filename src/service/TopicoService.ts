@@ -14,9 +14,10 @@ export interface TopicoResponse {
   respostas: Resposta[];
 }
 
+const token = localStorage.getItem("token");
+
 class TopicoService {
   static async adicionarTopico(data: { titulo: string; mensagem: string; autorId: number }) {
-    const token = localStorage.getItem("token");
     const response = await axios.post(`${TOPICO_API_URL}`, data, {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -26,7 +27,6 @@ class TopicoService {
   }
 
   static async listarTopicos(page: number, size: number, sort: string) {
-    const token = localStorage.getItem("token");
     const response = await axios.get<{
       content: TopicoResponse[];
       totalElements: number;

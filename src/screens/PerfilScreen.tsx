@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import UsuarioService, { UsuarioResponse } from "../service/UsuarioService";
 import { Box, VStack, Text, Spinner, HStack, Button, Input } from "@chakra-ui/react";
 import { Divider } from "@chakra-ui/layout";

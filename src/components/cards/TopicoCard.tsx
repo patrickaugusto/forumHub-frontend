@@ -1,4 +1,4 @@
-import { Box, Text, VStack, IconButton, HStack, Badge, Flex, Input, Button } from "@chakra-ui/react";
+import { Box, Text, VStack, HStack, Badge, Flex, Input, Button } from "@chakra-ui/react";
 import { TopicoResponse } from "../../service/TopicoService";
 import { useState, useEffect } from "react";
 import { LiaCommentSolid } from "react-icons/lia";

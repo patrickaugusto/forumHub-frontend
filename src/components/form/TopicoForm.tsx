@@ -1,5 +1,5 @@
 import { Input, Button, Stack, HStack } from "@chakra-ui/react";
-import { FormControl, FormLabel } from "@chakra-ui/form-control";
+import { FormControl } from "@chakra-ui/form-control";
 import React, { useState } from "react";
 import { Field } from "../ui/field"
 import "../../style/Modal.css";

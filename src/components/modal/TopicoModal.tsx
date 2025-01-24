@@ -1,4 +1,4 @@
-import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody } from '@chakra-ui/modal';
+import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalBody } from '@chakra-ui/modal';
 import { Button, useDisclosure } from "@chakra-ui/react";
 import * as React from "react";
 import TopicoForm from "../form/TopicoForm";
