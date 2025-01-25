@@ -7,8 +7,8 @@ export interface Resposta {
     mensagem: string;
     topicoId: number;
     usuarioId: number;
-    nomeUsuario: String;
-    dataHora: number[];
+    nomeUsuario: string;
+    dataHora: string;
     curtida: number;
 }
 

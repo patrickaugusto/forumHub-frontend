@@ -3,6 +3,8 @@ import { TopicoResponse } from "../../service/TopicoService";
 import { useState, useEffect } from "react";
 import { LiaCommentSolid } from "react-icons/lia";
 import RespostaService from "../../service/RespostaService";
+import { DrawerTitle } from "../ui/drawer";
+import { Avatar } from "../ui/avatar";
 
 interface TopicoCardProps {
   topico: TopicoResponse;
@@ -24,19 +26,19 @@ export const TopicoCard: React.FC<TopicoCardProps> = ({ topico }) => {
   const handleRespostaSubmit = async () => {
     const usuarioId = parseInt(localStorage.getItem("userId") ?? "0");
 
-    const novaResposta = { 
-        mensagem: resposta, 
-        topicoId: topico.id, 
-        usuarioId: usuarioId,
-     };
+    const novaResposta = {
+      mensagem: resposta,
+      topicoId: topico.id,
+      usuarioId: usuarioId,
+    };
 
     try {
-        const response = await RespostaService.adicionarResposta(novaResposta);
-        setResposta("");
-        topico.respostas.push(response);
-        setShowRespostas(true);
+      const response = await RespostaService.adicionarResposta(novaResposta);
+      setResposta("");
+      topico.respostas.push(response);
+      setShowRespostas(true);
     } catch (error) {
-        console.error( error);
+      console.error(error);
     }
   };
 
@@ -55,6 +57,15 @@ export const TopicoCard: React.FC<TopicoCardProps> = ({ topico }) => {
       transition="all 0.2s"
     >
       <VStack align="start">
+        <Text>
+          <HStack gap={2} align="center">
+            <Avatar name={topico.nomeAutor} />
+            <Text fontSize={"16px"}>
+              {topico.nomeAutor}
+            </Text>
+          </HStack>
+
+        </Text>
         <Flex w="100%" alignItems="center" justifyContent="space-between">
           <Text fontWeight="bold" fontSize="xl" color="gray.800">
             {topico.titulo}
@@ -93,7 +104,7 @@ export const TopicoCard: React.FC<TopicoCardProps> = ({ topico }) => {
               <Box key={resposta.id}>
                 <Text fontWeight="bold">{`${resposta.nomeUsuario}`}</Text>
                 <Text>{resposta.mensagem}</Text>
-                <Text fontSize="sm" color="gray.500">{resposta.dataHora.join('-')}</Text>
+                <Text fontSize="sm" color="gray.500">{resposta.dataHora}</Text>
               </Box>
             ))}
           </VStack>

@@ -11,6 +11,7 @@ export interface TopicoResponse {
   dataCriacao: string;
   status: string;
   autorId: number;
+  nomeAutor: string;
   respostas: Resposta[];
 }
 
