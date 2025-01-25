@@ -3,7 +3,6 @@ import { TopicoResponse } from "../../service/TopicoService";
 import { useState, useEffect } from "react";
 import { LiaCommentSolid } from "react-icons/lia";
 import RespostaService from "../../service/RespostaService";
-import { DrawerTitle } from "../ui/drawer";
 import { Avatar } from "../ui/avatar";
 
 interface TopicoCardProps {
