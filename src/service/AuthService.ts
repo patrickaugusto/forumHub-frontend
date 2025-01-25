@@ -23,7 +23,7 @@ export interface RegisterResponse{
 }
 
 class AuthService {
-  static async login(data: LoginRequest): Promise<LoginResponse> {
+  static async login(data: LoginRequest) {
     try {
       const response = await axios.post<LoginResponse>(`${API_URL}/login`, data, {
         withCredentials: true,
@@ -35,7 +35,7 @@ class AuthService {
     }
   }
 
-  static async register(data: RegisterRequest): Promise<RegisterResponse> {
+  static async register(data: RegisterRequest) {
     try {
       const response = await axios.post<RegisterResponse>(`${API_URL}/register`, data, {
         withCredentials: true,

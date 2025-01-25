@@ -21,6 +21,7 @@ const LoginForm: React.FC = () => {
             localStorage.setItem("userId", String(response.id));
 
             navigate("/");
+            window.location.reload();
         } catch (error: any) {
             console.error("Erro ao fazer login:", error);
             setErrorMessage("Credenciais inválidas. Tente novamente.");

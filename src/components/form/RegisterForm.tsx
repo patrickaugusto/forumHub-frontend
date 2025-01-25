@@ -16,7 +16,7 @@ const RegisterForm: React.FC = () => {
       const response = await AuthService.register(data);
       console.log("Cadastro realizado com sucedido:", response);
 
-      navigate("/");
+      navigate("/login");
 
     } catch (error: any) {
       console.error("Erro ao fazer o cadastro:", error);
