@@ -1,6 +1,6 @@
 import { Input, Button, Stack, HStack, Center, Flex, Text } from "@chakra-ui/react";
 import { FormControl } from "@chakra-ui/form-control";
-import React, { useState } from "react";
+import { useState } from "react";
 import { Field } from "../ui/field";
 import TopicoService from "../../service/TopicoService";
 import { Textarea } from "@chakra-ui/react";
