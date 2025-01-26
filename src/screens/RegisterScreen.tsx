@@ -10,10 +10,9 @@ const RegisterScreen: React.FC = () => {
   return (
     <>
       <Navbar />
-      <Center className="register-container" padding={5}>
+      <Center className="register-container" minH={"90vh"}>
         <Box className="register-box">
-          <Heading className="register-heading">Forum-Hub</Heading>
-          <Text className="register-subtitle">Criar uma conta</Text>
+          <Heading className="register-heading" mb={10}>Cadastro</Heading>
           <RegisterForm />
           <Text className="login-text">Já possui uma conta? <Link to={"/login"}>Faça login!</Link></Text>
         </Box>

@@ -19,7 +19,6 @@ const LoginForm: React.FC = () => {
 
             localStorage.setItem("token", response.token);
             localStorage.setItem("userId", String(response.id));
-
             navigate("/");
             window.location.reload();
         } catch (error: any) {
@@ -31,7 +30,7 @@ const LoginForm: React.FC = () => {
     return (
         <>
             <form onSubmit={handleSubmit(onSubmit)}>
-                <VStack gap="7" align="center" maxW="sm">
+                <VStack gap="5" align="center" maxW="sm">
                     <FormControl id="nome" isRequired className="control">
                         <Field
                             label="E-mail"

@@ -9,17 +9,20 @@ export interface UsuarioResponse {
 }
 
 const token = localStorage.getItem("token");
-const usuarioId = localStorage.getItem("userId");
-
+const usuarioId = Number(localStorage.getItem("userId"));
 
 class UsuarioService {
   static async buscarUsuarioPorId(): Promise<UsuarioResponse> {
+    if (!usuarioId) {
+      throw new Error("Usuário não autenticado. Redirecionando para login.");
+    }
     const response = await axios.get<UsuarioResponse>(
       `${USUARIO_API_URL}/id/${usuarioId}`,
       {
         headers: { Authorization: `Bearer ${token}` },
       }
     );
+    
     return response.data;
   }
 

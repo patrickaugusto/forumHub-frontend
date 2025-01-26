@@ -70,7 +70,7 @@ const Perfil = () => {
   return (
     <>
       <Navbar />
-      <VStack w="100%" px={5} py={2}>
+      <VStack w="100%" px={5} py={2} h={"90vh"}>
         <Box
           className="perfil-container"
           maxW="600px"

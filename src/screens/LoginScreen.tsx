@@ -9,10 +9,9 @@ const LoginScreen: React.FC = () => {
   return (
   <>
     <Navbar />
-    <Center className="login-container" padding={10}>
-      <Box className="login-box">
-        <Heading className="login-heading">Bem-vindo ao Forum-Hub</Heading>
-        <Text className="login-subtitle">Faça login para acessar o sistema</Text>
+    <Center className="login-container" minH={"90vh"}>
+      <Box className="login-box" >
+        <Heading className="login-heading"  mb={10}>Login</Heading>
         <LoginForm />
         <Text className="register-text">Não tem uma conta? <Link to={"/register"}>Cadastre-se!</Link></Text>
       </Box>

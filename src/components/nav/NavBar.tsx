@@ -30,12 +30,15 @@ import { useNavigate } from "react-router-dom";
 import { GoHome } from "react-icons/go";
 import { CgProfile } from "react-icons/cg";
 
+import logo from '../../assets/logo.png'
+
 
 const Navbar: React.FC = () => {
   const navigate = useNavigate();
   const [usuario, setUsuario] = useState<UsuarioResponse | null>(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [open, setOpen] = useState(false)
+
 
   const fetchUser = async () => {
     try {
@@ -74,7 +77,9 @@ const Navbar: React.FC = () => {
         mx="auto"
       >
         <Text fontSize={"2em"} fontWeight="bold" color={"darkblue"}>
-          <Link to={"/"}><strong>ForumHub</strong></Link>
+          <Link to={"/"}>
+          <img src={logo} width={"150px"}/>
+          </Link>
         </Text>
 
         <DrawerRoot open={open} onOpenChange={(e) => setOpen(e.open)}>

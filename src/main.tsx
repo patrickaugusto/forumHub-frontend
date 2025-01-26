@@ -10,6 +10,8 @@ if (!rootElement) {
   throw new Error("Root element not found. Make sure you have an element with id 'root' in your HTML.");
 }
 
+
+
 const root = ReactDOM.createRoot(rootElement);
 
 root.render(

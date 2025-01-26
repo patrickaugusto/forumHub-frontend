@@ -51,28 +51,26 @@ export const TopicoCard: React.FC<TopicoCardProps> = ({ topico }) => {
       padding="6"
       bg="gray.50"
       borderRadius="md"
-      boxShadow="0 4px 8px rgba(0, 0, 0, 0.1)"
+      boxShadow="lg"
       _hover={{ bg: "gray.100" }}
       transition="all 0.2s"
     >
       <VStack align="start">
-        <Text>
+      <Flex w="100%" alignItems="center" justifyContent="space-between">
           <HStack gap={2} align="center">
             <Avatar name={topico.nomeAutor} />
             <Text fontSize={"16px"}>
               {topico.nomeAutor}
             </Text>
           </HStack>
-
-        </Text>
-        <Flex w="100%" alignItems="center" justifyContent="space-between">
-          <Text fontWeight="bold" fontSize="xl" color="gray.800">
-            {topico.titulo}
-          </Text>
           <Text fontSize="sm" color="gray.500">
             {topico.dataCriacao}
           </Text>
-        </Flex>
+          </Flex>
+
+          <Text fontWeight="bold" fontSize="xl" color="gray.800">
+            {topico.titulo}
+          </Text>
         <Box bg={"gray.200"} w={"100%"} height={"12em"} p={2} borderRadius={5}>
           <Text color="gray.600">
             {topico.mensagem}

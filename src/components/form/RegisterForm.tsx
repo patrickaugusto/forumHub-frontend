@@ -1,36 +1,45 @@
 import React from "react";
-import { Button, Input, VStack} from "@chakra-ui/react";
+import { Button, Input, VStack } from "@chakra-ui/react";
+import { toaster } from "../ui/toaster"
 import { Field } from "../ui/field";
-import { FormControl } from "@chakra-ui/form-control"
+import { FormControl } from "@chakra-ui/form-control";
 import { useForm } from "react-hook-form";
 import AuthService, { RegisterRequest } from "../../service/AuthService";
 import { useNavigate } from "react-router-dom";
 
 const RegisterForm: React.FC = () => {
-
   const navigate = useNavigate();
   const { register, handleSubmit } = useForm<RegisterRequest>();
 
   const onSubmit = async (data: RegisterRequest) => {
     try {
       const response = await AuthService.register(data);
-      console.log("Cadastro realizado com sucedido:", response);
+      console.log("Cadastro realizado com sucesso:", response);
 
-      navigate("/login");
+      toaster.create({
+        title: "Cadastro realizado com sucesso!",
+        type: "success",
+      })
 
+      setTimeout(() => {
+        navigate("/login");
+      }, 1000);
     } catch (error: any) {
       console.error("Erro ao fazer o cadastro:", error);
+
+      toaster.create({
+        title: "Erro ao realizar o cadastro.",
+        type: "error",
+      });
     }
   };
 
   return (
     <>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <VStack gap="7" align="center" maxW="sm">
-        <FormControl id="nome" isRequired className="control">
-            <Field
-              label="Nome de Usuario"
-            >
+        <VStack gap="5" align="center" maxW="sm">
+          <FormControl id="nome" isRequired className="control">
+            <Field label="Nome de Usuario">
               <Input
                 type="text"
                 {...register("nome", { required: "Preencha o campo de nome." })}
@@ -39,9 +48,7 @@ const RegisterForm: React.FC = () => {
             </Field>
           </FormControl>
           <FormControl id="email" isRequired className="control">
-            <Field
-              label="E-mail"
-            >
+            <Field label="E-mail">
               <Input
                 type="email"
                 {...register("email", { required: "Preencha o campo de e-mail." })}
@@ -49,20 +56,20 @@ const RegisterForm: React.FC = () => {
               />
             </Field>
           </FormControl>
-          <Field
-            label="Senha"
-          >
+          <Field label="Senha">
             <Input
               type="password"
               {...register("senha", { required: "Preencha o campo de senha." })}
               placeholder="fulano123"
             />
           </Field>
-          <Button type="submit" className="button-cadastrar">Cadastrar</Button>
+          <Button type="submit" className="button-cadastrar">
+            Cadastrar
+          </Button>
         </VStack>
       </form>
     </>
   );
 };
 
-export default RegisterForm
+export default RegisterForm;
