@@ -1,6 +1,6 @@
 import { Input, Button, Stack, HStack, Center, Flex, Text } from "@chakra-ui/react";
 import { FormControl } from "@chakra-ui/form-control";
-import { useState } from "react";
+import React,{ useState } from "react";
 import { Field } from "../ui/field";
 import TopicoService from "../../service/TopicoService";
 import { Textarea } from "@chakra-ui/react";
@@ -18,7 +18,10 @@ const TopicoForm = ({ onClose }: TopicoFormProps) => {
   const MAX_TITULO_LENGTH = 50;
   const MAX_MENSAGEM_LENGTH = 500;
 
-  const usuarioId = Number(localStorage.getItem("userId"));
+  const autorId = React.useMemo(() => {
+    const storedId = localStorage.getItem("userId");
+    return storedId ? parseInt(storedId, 10) : null;
+  }, []);
 
   const handleInputChange = (field: string, value: string) => {
     if (field === "titulo") {
@@ -30,12 +33,12 @@ const TopicoForm = ({ onClose }: TopicoFormProps) => {
 
   const handleSave = async () => {
     
-    if (!usuarioId) {
+    if (!autorId) {
       console.error("Erro: Autor não encontrado. Faça login novamente.");
       return;
     }
 
-    const novoTopico = { titulo, mensagem, usuarioId };
+    const novoTopico = { titulo, mensagem, autorId };
 
     try {
       await TopicoService.adicionarTopico(novoTopico);

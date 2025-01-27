@@ -5,6 +5,7 @@ import { LiaCommentSolid } from "react-icons/lia";
 import RespostaService from "../../service/RespostaService";
 import { Avatar } from "../ui/avatar";
 
+
 interface TopicoCardProps {
   topico: TopicoResponse;
 }
@@ -56,7 +57,7 @@ export const TopicoCard: React.FC<TopicoCardProps> = ({ topico }) => {
       transition="all 0.2s"
     >
       <VStack align="start">
-      <Flex w="100%" alignItems="center" justifyContent="space-between">
+        <Flex w="100%" alignItems="center" justifyContent="space-between">
           <HStack gap={2} align="center">
             <Avatar name={topico.nomeAutor} />
             <Text fontSize={"16px"}>
@@ -66,11 +67,11 @@ export const TopicoCard: React.FC<TopicoCardProps> = ({ topico }) => {
           <Text fontSize="sm" color="gray.500">
             {topico.dataCriacao}
           </Text>
-          </Flex>
+        </Flex>
 
-          <Text fontWeight="bold" fontSize="xl" color="gray.800">
-            {topico.titulo}
-          </Text>
+        <Text fontWeight="bold" fontSize="xl" color="gray.800">
+          {topico.titulo}
+        </Text>
         <Box bg={"gray.200"} w={"100%"} height={"12em"} p={2} borderRadius={5}>
           <Text color="gray.600">
             {topico.mensagem}

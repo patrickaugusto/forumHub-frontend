@@ -4,15 +4,3 @@
   min-height: 100vh;
 }
 
-.wave {
-  position: absolute;
-  width: 100%;
-  bottom: 0;
-  z-index: -1;
-}
-
-@media (max-width: 769px) {
-  .wave {
-    width: 1000%;
-  }
-}

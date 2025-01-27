@@ -18,7 +18,7 @@ export interface TopicoResponse {
 const token = localStorage.getItem("token");
 
 class TopicoService {
-  static async adicionarTopico(data: { titulo: string; mensagem: string; usuarioId: number }) {
+  static async adicionarTopico(data: { titulo: string; mensagem: string; autorId: number }) {
     const response = await axios.post(`${TOPICO_API_URL}`, data, {
       headers: {
         Authorization: `Bearer ${token}`,
