@@ -1,12 +1,10 @@
 import { useEffect, useState } from "react";
 import UsuarioService, { UsuarioResponse } from "../service/UsuarioService";
-import { Box, VStack, Text, Spinner, HStack, Button, Input } from "@chakra-ui/react";
-import { Divider } from "@chakra-ui/layout";
-import { Avatar } from "../components/ui/avatar";
+import { Box, VStack, Spinner, Text, Flex } from "@chakra-ui/react";
 import Navbar from "../components/nav/NavBar";
-import { FiEdit3, FiCheck, FiX } from "react-icons/fi";
-import { Field } from "../components/ui/field";
-import { useNavigate } from "react-router-dom";
+import AvatarProfile from "../components/perfil/AvatarProfile";
+import EditableField from "../components/perfil/EditableField";
+import { TopicoDialog } from "../components/dialog/TopicoDialog";
 
 const Perfil = () => {
   const [usuario, setUsuario] = useState<UsuarioResponse | null>(null);
@@ -14,7 +12,7 @@ const Perfil = () => {
   const [isEditingEmail, setIsEditingEmail] = useState(false);
   const [editedName, setEditedName] = useState("");
   const [editedEmail, setEditedEmail] = useState("");
-  const navigate = useNavigate();
+  const [loading, setLoading] = useState(true);
 
   const fetchUser = async () => {
     try {
@@ -24,18 +22,20 @@ const Perfil = () => {
       setEditedEmail(data.email);
     } catch (error) {
       console.error("Erro ao buscar usuário:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
-  const handleSave = async (field: "name" | "email") => {
+  const handleSave = async (field: "name" | "email", value: string) => {
     if (!usuario) return;
 
     try {
       if (field === "name") {
-        const updatedUser = await UsuarioService.atualizarUsuario(editedName, usuario.email);
+        const updatedUser = await UsuarioService.atualizarUsuario(value, usuario.email);
         setUsuario(updatedUser);
       } else if (field === "email") {
-        const updatedUser = await UsuarioService.atualizarUsuario(usuario.nome, editedEmail);
+        const updatedUser = await UsuarioService.atualizarUsuario(usuario.nome, value);
         setUsuario(updatedUser);
       }
     } catch (error) {
@@ -60,165 +60,88 @@ const Perfil = () => {
     fetchUser();
   }, []);
 
-  const handleLogout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("userId");
-    navigate("/");
-    window.location.reload();
-  };
-
   return (
     <>
       <Navbar />
       <VStack w="100%" px={5} py={2} h={"90vh"}>
         <Box
-          className="perfil-container"
-          maxW="600px"
           w="100%"
+          maxW={"1200px"}
           mx="auto"
-          p={8}
+          p={5}
           bg="white"
           boxShadow="lg"
           borderRadius="lg"
           border="1px solid"
           borderColor="gray.200"
+          display={"flex"}
+          gap={10}
+          alignItems="center"
+          h={"30em"}
         >
-          <VStack gap={8} align="stretch" w="100%">
-            <Text fontSize="3xl" fontWeight="bold" color="gray.700" textAlign="center">
-              Meu Perfil
-            </Text>
-            {usuario ? (
+
+          {loading ? (
+            <Box w="100%" h="100vh" display="flex" justifyContent="center" alignItems="center">
+            <Spinner size="xl" color="blue.500" />
+          </Box>
+          ) : usuario &&
+            (
               <>
-                <VStack gap={6} align="center">
-                  <Box w="8em" h="8em">
-                    <Avatar size="full" name={usuario.nome} />
-                  </Box>
 
-                  {/* Nome */}
-                  <HStack w="100%" justify="space-between" align="center">
-                    {isEditingName ? (
-                      <>
-                        <Field label="Nome">
-                          <HStack width="100%">
-                            <Input
-                              value={editedName}
-                              onChange={(e) => setEditedName(e.target.value)}
-                              size="md"
-                              placeholder="Editar nome"
-                            />
-                            <HStack>
-                              <Box
-                                as="span"
-                                color="green.500"
-                                cursor="pointer"
-                                fontSize="lg"
-                                onClick={() => handleSave("name")}
-                              >
-                                <FiCheck />
-                              </Box>
-                              <Box
-                                as="span"
-                                color="red.500"
-                                cursor="pointer"
-                                fontSize="lg"
-                                onClick={() => handleCancel("name")}
-                              >
-                                <FiX />
-                              </Box>
-                            </HStack>
-                          </HStack>
-                        </Field>
+                <VStack gap={8} align="stretch" w="100%" maxW={"400px"} p={2} h={"100%"}>
+                  <Text fontSize="3xl" fontWeight="bold" color="gray.700" textAlign="center">
+                    Perfil
+                  </Text>
+                  <VStack gap={6} align="center">
+                    <AvatarProfile name={usuario.nome} />
 
-                      </>
-                    ) : (
-                      <>
-                        <Field label="Nome">
-                          <Text fontSize="lg" fontWeight="bold" color="gray.800">
-                            {usuario.nome}
-                          </Text>
-                        </Field>
-                        <Box
-                          as="span"
-                          color="blue.500"
-                          cursor="pointer"
-                          fontSize="lg"
-                          onClick={() => setIsEditingName(true)}
-                        >
-                          <FiEdit3 />
-                        </Box>
-                      </>
-                    )}
-                  </HStack>
+                    <EditableField
+                      label="Nome"
+                      value={editedName}
+                      isEditing={isEditingName}
+                      onEdit={() => setIsEditingName(true)}
+                      onSave={(value) => handleSave("name", value)}
+                      onCancel={() => handleCancel("name")}
+                      onChange={setEditedName}
+                    />
 
-                  {/* E-mail */}
-                  <HStack w="100%" justify="space-between" align="center">
-                    {isEditingEmail ? (
-                      <>
-                        <Field label="E-mail">
-                          <HStack w={"100%"}>
-                            <Input
-                              value={editedEmail}
-                              onChange={(e) => setEditedEmail(e.target.value)}
-                              size="md"
-                              placeholder="Editar e-mail"
-                            />
-                            <HStack>
-                              <Box
-                                as="span"
-                                color="green.500"
-                                cursor="pointer"
-                                fontSize="lg"
-                                onClick={() => handleSave("email")}
-                              >
-                                <FiCheck />
-                              </Box>
-                              <Box
-                                as="span"
-                                color="red.500"
-                                cursor="pointer"
-                                fontSize="lg"
-                                onClick={() => handleCancel("email")}
-                              >
-                                <FiX />
-                              </Box>
-                            </HStack>
-                          </HStack>
-                        </Field>
-
-                      </>
-                    ) : (
-                      <>
-                        <Field label="E-mail">
-                          <Text fontSize="lg" fontWeight="bold" color="gray.800">
-                            {usuario.email}
-                          </Text>
-                        </Field>
-                        <Box
-                          as="span"
-                          color="blue.500"
-                          cursor="pointer"
-                          fontSize="lg"
-                          onClick={() => setIsEditingEmail(true)}
-                        >
-                          <FiEdit3 />
-                        </Box>
-                      </>
-                    )}
-                  </HStack>
+                    <EditableField
+                      label="E-mail"
+                      value={editedEmail}
+                      isEditing={isEditingEmail}
+                      onEdit={() => setIsEditingEmail(true)}
+                      onSave={(value) => handleSave("email", value)}
+                      onCancel={() => handleCancel("email")}
+                      onChange={setEditedEmail}
+                    />
+                  </VStack>
                 </VStack>
 
-                <Divider borderColor="gray.300" />
-                <VStack w={"100%"}>
+                <Box bg={"blackAlpha.200"} p={0.5} h={"100%"} borderRadius={100} />
 
-                <Button colorScheme="red" size="lg" w="50%" borderRadius="md" variant="outline" onClick={handleLogout}>
-                  <Text color={"red.600"}>Sair da Conta</Text>
-                </Button>
+                <VStack alignItems={"center"} width={"100%"} p={2} h={"100%"}>
+                  <Text fontSize="3xl" fontWeight="bold" color="gray.700" textAlign="center">
+                    Meus topicos
+                  </Text>
+                  <VStack alignItems={"start"} width={"100%"} p={4} h={"100%"}>
+                    {usuario?.topicosFeito && usuario.topicosFeito.length > 0 ? (
+                      <VStack gap="6" align="stretch" w={"100%"}>
+                        {usuario.topicosFeito.map((topico) => (
+                          <TopicoDialog key={topico.id} topico={topico} />
+                        ))}
+                      </VStack>
+                    ) : (
+                      <Flex justifyContent="center" alignItems="center">
+                        <Text fontSize={"2em"}>Nenhum tópico no momento.</Text>
+                      </Flex>
+                    )}
+                  </VStack>
                 </VStack>
               </>
-            ) : (
-              <Spinner size="xl" color="blue.500" alignSelf="center" />
-            )}
-          </VStack>
+
+
+            )
+          }
         </Box>
       </VStack>
     </>

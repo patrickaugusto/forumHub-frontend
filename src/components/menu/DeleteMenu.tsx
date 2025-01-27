@@ -39,7 +39,5 @@ export const DeleteMenu = () => {
 }
 
 const items = [
-  { title: "Delete", value: "" },
-  { title: "Detect Language", value: "detect-language" },
-  { title: "Spellcheck", value: "spellcheck" },
+  { title: "Delete", value: "" }, 
 ]

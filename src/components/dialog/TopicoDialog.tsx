@@ -19,7 +19,7 @@ export const TopicoDialog: React.FC<TopicoDialogProps> = ({ topico }) => {
                 placement="center"
                 motionPreset="slide-in-bottom"
             >
-                <DialogTrigger asChild bg={"bg.subtle"} w={"100%"} h={"5em"}>
+                <DialogTrigger asChild bg={"bg.subtle"} w={"100%"} h={"6em"}>
                     <Button variant="outline">
                         <VStack alignItems={"start"} width={"100%"}>
 

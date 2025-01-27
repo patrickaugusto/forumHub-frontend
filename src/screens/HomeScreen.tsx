@@ -67,7 +67,7 @@ const Home = () => {
       <Box className="home-container" gap="4">
         <Box className="main-content">
 
-          <Box className="scrollable-box" borderRadius="xl" mb={5}>
+          <Box className="scrollable-box" mb={5}>
             {loading ? (
               <Flex justifyContent="center" h="100%">
                 <Spinner size="lg" color="blue.500" />

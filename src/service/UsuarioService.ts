@@ -1,4 +1,5 @@
 import axios from "axios";
+import { TopicoResponse } from "./TopicoService";
 
 const USUARIO_API_URL = "https://forumhub-production.up.railway.app/usuarios";
 
@@ -6,6 +7,8 @@ export interface UsuarioResponse {
   id: number;
   nome: string;
   email: string;
+  role: string;
+  topicosFeito: TopicoResponse[];
 }
 
 const token = localStorage.getItem("token");
