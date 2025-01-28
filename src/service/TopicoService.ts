@@ -37,6 +37,16 @@ class TopicoService {
     });
     return response.data;
   }
+
+  static async deletarTopico(topicoId: number) {
+    await axios.delete(`${TOPICO_API_URL}/${topicoId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+  }
+  
+
 }
 
 export default TopicoService;

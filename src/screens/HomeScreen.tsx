@@ -10,7 +10,7 @@ import {
 } from "../components/ui/pagination";
 import "../style/HomeScreen.css";
 import Navbar from "../components/nav/NavBar";
-import { TopicoDialog } from "../components/dialog/TopicoDialog";
+import { TopicoDialog } from "../components/dialog/TopicoHome";
 import {
   MenuContent,
   MenuRadioItem,
@@ -64,8 +64,8 @@ const Home = () => {
   return (
     <>
       <Navbar />
-      <Box className="home-container" gap="4">
-        <Box className="main-content" maxW={"1200px"}>
+      <Box className="home-container" gap="4" m={"auto"} justifyContent={"center"}>
+        <Box className="main-content" maxW={"1000px"}>
 
           <Box className="scrollable-box" mb={5}>
             {loading ? (

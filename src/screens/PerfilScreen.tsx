@@ -4,7 +4,7 @@ import { Box, VStack, Spinner, Text, Flex,HStack, Container } from "@chakra-ui/r
 import Navbar from "../components/nav/NavBar";
 import AvatarProfile from "../components/perfil/AvatarProfile";
 import EditableField from "../components/perfil/EditableField";
-import { TopicoDialog } from "../components/dialog/TopicoDialog";
+import { TopicoPerfil } from "../components/dialog/TopicoPerfil";
 
 const Perfil = () => {
   const [usuario, setUsuario] = useState<UsuarioResponse | null>(null);
@@ -13,6 +13,7 @@ const Perfil = () => {
   const [editedName, setEditedName] = useState("");
   const [editedEmail, setEditedEmail] = useState("");
   const [loading, setLoading] = useState(true);
+  
 
   const fetchUser = async () => {
     try {
@@ -122,13 +123,11 @@ const Perfil = () => {
                     {usuario?.topicosFeito && usuario.topicosFeito.length > 0 ? (
                       <VStack gap="6" align="stretch" w={"100%"}>
                         {usuario.topicosFeito.map((topico) => (
-                          <TopicoDialog key={topico.id} topico={topico} />
+                          <TopicoPerfil key={topico.id} topico={topico} />
                         ))}
                       </VStack>
                     ) : (
-                      <Flex justifyContent="center" alignItems="center">
-                        <Text fontSize={"2em"}>Nenhum tópico no momento.</Text>
-                      </Flex>
+                        <Text fontSize={"2em"} textAlign={"center"} width={"100%"}>Nenhum tópico no momento.</Text>
                     )}
                   </VStack>
                 </VStack>

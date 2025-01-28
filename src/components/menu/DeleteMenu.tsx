@@ -1,33 +1,63 @@
-"use client"
-
-import { Button, useCheckboxGroup } from "@chakra-ui/react"
+import { Button, useCheckboxGroup } from "@chakra-ui/react";
 import {
   MenuCheckboxItem,
   MenuContent,
   MenuItemGroup,
   MenuRoot,
   MenuTrigger,
-} from "../ui/menu"
+} from "../ui/menu";
 import { CiMenuKebab } from "react-icons/ci";
+import TopicoService, { TopicoResponse } from "../../service/TopicoService";
+import { toaster } from "../ui/toaster";
 
+interface DeleteMenuProps {
+  topico: TopicoResponse;
+}
 
-export const DeleteMenu = () => {
-  const group = useCheckboxGroup({ defaultValue: ["bar"] })
+export const DeleteMenu: React.FC<DeleteMenuProps> = ({ topico }) => {
+  const group = useCheckboxGroup({ defaultValue: ["bar"] });
+
+  const deleteTopico = async (topicoId: number) => {
+    try {
+      await TopicoService.deletarTopico(topicoId);
+      console.log(`Tópico ${topicoId} deletado com sucesso!`);
+      toaster.create({
+        title: "Tópico deletado com sucesso!",
+        type: "success",
+      });
+      window.location.reload();
+    } catch (error) {
+      console.error("Erro ao deletar tópico:", error);
+      toaster.create({
+        title: "Erro ao deletar tópico!",
+        type: "error",
+      });
+    }
+  };
+
   return (
     <MenuRoot>
-      <MenuTrigger asChild>
-        <Button variant="outline" size="sm">
-            <CiMenuKebab />
+      <MenuTrigger asChild border={"none"} px={1}>
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={(e) => e.stopPropagation()} 
+        >
+          <CiMenuKebab rotate={"90deg"} />
         </Button>
       </MenuTrigger>
       <MenuContent>
-        <MenuItemGroup title="Features">
+        <MenuItemGroup>
           {items.map(({ title, value }) => (
             <MenuCheckboxItem
               key={value}
               value={value}
               checked={group.isChecked(value)}
               onCheckedChange={() => group.toggleValue(value)}
+              onClick={(e) => {
+                e.stopPropagation(); 
+                deleteTopico(topico.id); 
+              }}
             >
               {title}
             </MenuCheckboxItem>
@@ -35,9 +65,7 @@ export const DeleteMenu = () => {
         </MenuItemGroup>
       </MenuContent>
     </MenuRoot>
-  )
-}
+  );
+};
 
-const items = [
-  { title: "Delete", value: "" }, 
-]
+const items = [{ title: "Deletar", value: "" }];
