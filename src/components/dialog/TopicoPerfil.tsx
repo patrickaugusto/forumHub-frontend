@@ -1,4 +1,4 @@
-import { Button, HStack, Text, Flex, VStack, Center } from "@chakra-ui/react";
+import { Button, HStack, Text, Flex, VStack } from "@chakra-ui/react";
 import {
     DialogContent,
     DialogRoot,

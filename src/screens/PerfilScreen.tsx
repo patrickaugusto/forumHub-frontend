@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import UsuarioService, { UsuarioResponse } from "../service/UsuarioService";
-import { Box, VStack, Spinner, Text, Flex,HStack, Container } from "@chakra-ui/react";
+import { Box, VStack, Spinner, Text, Flex, Container } from "@chakra-ui/react";
 import Navbar from "../components/nav/NavBar";
 import AvatarProfile from "../components/perfil/AvatarProfile";
 import EditableField from "../components/perfil/EditableField";
