@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import UsuarioService, { UsuarioResponse } from "../service/UsuarioService";
-import { Box, VStack, Spinner, Text, Flex } from "@chakra-ui/react";
+import { Box, VStack, Spinner, Text, Flex,HStack, Container } from "@chakra-ui/react";
 import Navbar from "../components/nav/NavBar";
 import AvatarProfile from "../components/perfil/AvatarProfile";
 import EditableField from "../components/perfil/EditableField";
@@ -63,32 +63,29 @@ const Perfil = () => {
   return (
     <>
       <Navbar />
-      <VStack w="100%" px={5} py={2} h={"90vh"}>
-        <Box
+      <Container w="100%" px={5} py={2} minH={"90vh"} mt={20}>
+        <Flex
           w="100%"
           maxW={"1200px"}
-          mx="auto"
+          m="auto"
           p={5}
           bg="white"
           boxShadow="lg"
           borderRadius="lg"
-          border="1px solid"
-          borderColor="gray.200"
-          display={"flex"}
+          wrap={"wrap"}
           gap={10}
-          alignItems="center"
-          h={"30em"}
+          h={"100%"}
         >
 
           {loading ? (
-            <Box w="100%" h="100vh" display="flex" justifyContent="center" alignItems="center">
-            <Spinner size="xl" color="blue.500" />
-          </Box>
+            <Box w="100%" h={"50vh"} display="flex" justifyContent="center" alignItems="center">
+              <Spinner size="xl" color="blue.500" />
+            </Box>
           ) : usuario &&
             (
               <>
 
-                <VStack gap={8} align="stretch" w="100%" maxW={"400px"} p={2} h={"100%"}>
+                <VStack gap={8} align="stretch" w="100%" maxW={"400px"} p={2}>
                   <Text fontSize="3xl" fontWeight="bold" color="gray.700" textAlign="center">
                     Perfil
                   </Text>
@@ -117,9 +114,7 @@ const Perfil = () => {
                   </VStack>
                 </VStack>
 
-                <Box bg={"blackAlpha.200"} p={0.5} h={"100%"} borderRadius={100} />
-
-                <VStack alignItems={"center"} width={"100%"} p={2} h={"100%"}>
+                <VStack alignItems={"center"} w={"40em"} p={2} h={"100%"}>
                   <Text fontSize="3xl" fontWeight="bold" color="gray.700" textAlign="center">
                     Meus topicos
                   </Text>
@@ -142,8 +137,8 @@ const Perfil = () => {
 
             )
           }
-        </Box>
-      </VStack>
+        </Flex>
+      </Container>
     </>
   );
 };

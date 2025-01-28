@@ -65,7 +65,7 @@ const Home = () => {
     <>
       <Navbar />
       <Box className="home-container" gap="4">
-        <Box className="main-content">
+        <Box className="main-content" maxW={"1200px"}>
 
           <Box className="scrollable-box" mb={5}>
             {loading ? (
@@ -104,8 +104,13 @@ const Home = () => {
           </PaginationRoot>
         </Box>
 
+        <Flex 
+          gap={5}
+          wrap={"wrap"}
+        >
+
         <MenuRoot>
-          <MenuTrigger asChild>
+          <MenuTrigger asChild border={"none"}>
             <Button variant="outline" size="sm">
               <HiSortAscending /> Ordenar
             </Button>
@@ -127,6 +132,7 @@ const Home = () => {
             <AdicionarTopico />
           </Box>
         )}
+        </Flex>
       </Box>
     </>
   );
