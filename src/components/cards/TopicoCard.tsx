@@ -141,7 +141,7 @@ export const TopicoCard: React.FC<TopicoCardProps> = ({ topico }) => {
                     • {resposta.dataHora}
                   </Text>
                 </HStack>
-                <Box pl={11} w={"600px"}>
+                <Box pl={11} w={"100%"} maxW={"600px"}>
                   <Text>
                     {resposta.mensagem}
                   </Text>
