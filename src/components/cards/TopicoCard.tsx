@@ -54,6 +54,7 @@ export const TopicoCard: React.FC<TopicoCardProps> = ({ topico }) => {
       topico.respostas.push(response);
       setShowRespostas(true);
       setShowEnviarButton(false);
+      setAltura("")
     } catch (error) {
       console.error(error);
     }
@@ -107,7 +108,7 @@ export const TopicoCard: React.FC<TopicoCardProps> = ({ topico }) => {
               rows={3}
             />
             {showEnviarButton && (
-              <Button mt="2" onClick={handleRespostaSubmit}>
+              <Button mt="2" onClick={handleRespostaSubmit} className="button">
                 Enviar
               </Button>
             )}
