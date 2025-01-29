@@ -1,15 +1,15 @@
-import React from "react";
-import { Button, Input, VStack } from "@chakra-ui/react";
-import { toaster } from "../ui/toaster"
-import { Field } from "../ui/field";
-import { FormControl } from "@chakra-ui/form-control";
+import React, { useState } from "react";
+import { Box, Button, defineStyle, Input, VStack, Field, IconButton } from "@chakra-ui/react";
+import { toaster } from "../ui/toaster";
 import { useForm } from "react-hook-form";
 import AuthService, { RegisterRequest } from "../../service/AuthService";
 import { useNavigate } from "react-router-dom";
+import { FiEye, FiEyeOff } from "react-icons/fi";
 
 const RegisterForm: React.FC = () => {
   const navigate = useNavigate();
   const { register, handleSubmit } = useForm<RegisterRequest>();
+  const [showPassword, setShowPassword] = useState(false);
 
   const onSubmit = async (data: RegisterRequest) => {
     try {
@@ -19,7 +19,7 @@ const RegisterForm: React.FC = () => {
       toaster.create({
         title: "Cadastro realizado com sucesso!",
         type: "success",
-      })
+      });
 
       setTimeout(() => {
         navigate("/login");
@@ -35,41 +35,84 @@ const RegisterForm: React.FC = () => {
   };
 
   return (
-    <>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <VStack gap="5" align="center" maxW="sm">
-          <FormControl id="nome" isRequired className="control">
-            <Field label="Nome de Usuario">
-              <Input
-                type="text"
-                {...register("nome", { required: "Preencha o campo de nome." })}
-                placeholder="Fulano da Silva"
-              />
-            </Field>
-          </FormControl>
-          <FormControl id="email" isRequired className="control">
-            <Field label="E-mail">
-              <Input
-                type="email"
-                {...register("email", { required: "Preencha o campo de e-mail." })}
-                placeholder="fulano@gmail.com"
-              />
-            </Field>
-          </FormControl>
-          <Field label="Senha">
+    <form onSubmit={handleSubmit(onSubmit)} style={{ padding: "1em", width: "100%" }}>
+      <VStack gap="5" align="center" w={"100%"}>
+        <Field.Root>
+          <Box pos="relative" w="full">
             <Input
-              type="password"
-              {...register("senha", { required: "Preencha o campo de senha." })}
-              placeholder="fulano123"
+              className="peer"
+              type="text"
+              placeholder=""
+              {...register("nome", { required: "Preencha o campo de nome." })}
             />
-          </Field>
-          <Button type="submit" className="button-cadastrar">
-            Cadastrar
-          </Button>
-        </VStack>
-      </form>
-    </>
+            <Field.Label css={floatingStyles}>Nome de usuário</Field.Label>
+          </Box>
+        </Field.Root>
+
+        <Field.Root>
+          <Box pos="relative" w="full">
+            <Input
+              className="peer"
+              type="email"
+              {...register("email", { required: "Preencha o campo de e-mail." })}
+              placeholder=""
+            />
+            <Field.Label css={floatingStyles}>E-mail</Field.Label>
+          </Box>
+        </Field.Root>
+
+        <Field.Root>
+          <Box pos="relative" w="full">
+            <Input
+              className="peer"
+              type={showPassword ? "text" : "password"}
+              {...register("senha", { required: "Preencha o campo de senha." })}
+              placeholder=""
+            />
+            <IconButton
+              pos="absolute"
+              top="50%"
+              right="1rem"
+              transform="translateY(-50%)"
+              size="xs"
+              aria-label={showPassword ? "Ocultar senha" : "Mostrar senha"}
+              onClick={() => setShowPassword(!showPassword)}
+              variant="ghost"
+              bg={"transparent"}
+              _hover={{ bg: "gray.200" }}
+            >
+
+              {showPassword ? <FiEyeOff /> : <FiEye />}
+            </IconButton>
+            <Field.Label css={floatingStyles}>Senha</Field.Label>
+          </Box>
+        </Field.Root>
+
+        <Button type="submit" className="button">Cadastrar</Button>
+      </VStack>
+    </form>
   );
 };
 
 export default RegisterForm;
+
+const floatingStyles = defineStyle({
+  pos: "absolute",
+  bg: "bg",
+  px: "0.5",
+  top: "-3",
+  insetStart: "2",
+  fontWeight: "normal",
+  pointerEvents: "none",
+  transition: "all 0.2s ease",
+  _peerPlaceholderShown: {
+    color: "fg.muted",
+    top: "2.5",
+    insetStart: "3",
+  },
+  _peerFocusVisible: {
+    color: "fg",
+    top: "-3",
+    insetStart: "2",
+  },
+});

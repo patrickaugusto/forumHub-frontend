@@ -7,6 +7,8 @@ import {
   Button,
   VStack,
   HStack,
+  Skeleton,
+  Stack,
 } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 import {
@@ -21,9 +23,6 @@ import {
   DrawerTrigger,
   DrawerActionTrigger,
 } from "../ui/drawer"
-import {
-  Spinner
-} from "@chakra-ui/react";
 import UsuarioService, { UsuarioResponse } from "../../service/UsuarioService";
 import { Avatar } from "../ui/avatar";
 import { useNavigate } from "react-router-dom";
@@ -31,6 +30,7 @@ import { GoHome } from "react-icons/go";
 import { CgProfile } from "react-icons/cg";
 
 import logo from '../../assets/logo.png'
+import { SkeletonCircle } from "../ui/skeleton";
 
 
 const Navbar: React.FC = () => {
@@ -78,18 +78,18 @@ const Navbar: React.FC = () => {
       >
         <Text fontSize={"2em"} fontWeight="bold" color={"darkblue"}>
           <Link to={"/"}>
-          <img src={logo} width={"150px"}/>
+            <img src={logo} width={"150px"} />
           </Link>
         </Text>
 
-        <DrawerRoot open={open} onOpenChange={(e) => setOpen(e.open)}>
-          <DrawerBackdrop />
-          <DrawerTrigger 
-          asChild 
-          border={"none"}
-          _hover={{bg: "whiteAlpha.500"}}
+        <DrawerRoot open={open} onOpenChange={(e) => setOpen(e.open)} >
+          <DrawerBackdrop zIndex={2}/>
+          <DrawerTrigger
+            asChild
+            border={"none"}
+            _hover={{ bg: "gray.100" }}
           >
-            <Button variant="outline" _hover={{ bg: "gray.200" }}>
+            <Button bg={"transparent"} variant="outline">
               <FaBars size={20} color="gray" />
             </Button>
           </DrawerTrigger>
@@ -103,26 +103,31 @@ const Navbar: React.FC = () => {
                         <Avatar width={"4em"} height={"4em"} name={usuario.nome} />
                         <VStack align="start" gap={1}>
                           <DrawerTitle fontSize="1.5em" fontWeight="bold" color="gray.800">
-                          {usuario.nome.split(" ")[0]}
+                            {usuario.nome.split(" ")[0]}
                           </DrawerTitle>
                         </VStack>
                       </HStack>
                     </>
                   ) : (
-                    <Spinner size="lg" color="blue.500" />
+                    <HStack gap="2">
+                      <SkeletonCircle size="12" />
+                      <Stack flex="1">
+                        <Skeleton height="5" w={100} />
+                      </Stack>
+                    </HStack>
                   )}
                 </DrawerHeader>
                 <DrawerBody>
                   <VStack align={"start"} gap={5}>
                     <Link to={"/"}>
-                    <HStack alignItems={"center"} justifyContent={"center"}>
-                        <GoHome size={20}/>
+                      <HStack alignItems={"center"} justifyContent={"center"}>
+                        <GoHome size={20} />
                         <Text fontSize={"18px"}>Inicio</Text>
                       </HStack>
                     </Link>
                     <Link to={"/perfil"}>
                       <HStack alignItems={"center"} justifyContent={"center"}>
-                        <CgProfile size={20}/>
+                        <CgProfile size={20} />
                         <Text fontSize={"18px"}>Perfil</Text>
                       </HStack>
                     </Link>
@@ -132,7 +137,7 @@ const Navbar: React.FC = () => {
                   <DrawerActionTrigger asChild>
                     <Button
                       bg={"transparent"}
-                      _hover={{bg: "gray.200"}}
+                      _hover={{ bg: "gray.200" }}
                       onClick={handleLogout}
                       border={"none"}
                       color={"red.600"}
@@ -158,7 +163,7 @@ const Navbar: React.FC = () => {
                 </DrawerBody>
               </>
             )}
-            <DrawerCloseTrigger />
+            <DrawerCloseTrigger bg={"transparent"}  _hover={{ bg: "gray.100" }}/>
           </DrawerContent>
         </DrawerRoot>
       </Flex>

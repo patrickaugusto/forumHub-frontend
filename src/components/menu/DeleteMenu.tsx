@@ -1,4 +1,4 @@
-import { Button, useCheckboxGroup } from "@chakra-ui/react";
+import { IconButton, useCheckboxGroup } from "@chakra-ui/react";
 import {
   MenuCheckboxItem,
   MenuContent,
@@ -6,7 +6,7 @@ import {
   MenuRoot,
   MenuTrigger,
 } from "../ui/menu";
-import { CiMenuKebab } from "react-icons/ci";
+import { AiOutlineMore } from "react-icons/ai";
 import TopicoService, { TopicoResponse } from "../../service/TopicoService";
 import { toaster } from "../ui/toaster";
 
@@ -37,14 +37,16 @@ export const DeleteMenu: React.FC<DeleteMenuProps> = ({ topico }) => {
 
   return (
     <MenuRoot>
-      <MenuTrigger asChild border={"none"} px={1}>
-        <Button
-          variant="outline"
-          size="sm"
+      <MenuTrigger asChild border={"none"}>
+        <IconButton
           onClick={(e) => e.stopPropagation()} 
+          bg={"gray.200"}
+          p={1}
+          borderRadius={5}
+          size={"2xs"}
         >
-          <CiMenuKebab rotate={"90deg"} />
-        </Button>
+          <AiOutlineMore rotate={"90deg"} color="black"/>
+        </IconButton>
       </MenuTrigger>
       <MenuContent>
         <MenuItemGroup>
@@ -58,6 +60,8 @@ export const DeleteMenu: React.FC<DeleteMenuProps> = ({ topico }) => {
                 e.stopPropagation(); 
                 deleteTopico(topico.id); 
               }}
+              cursor={"pointer"}
+              color={"red.600"}
             >
               {title}
             </MenuCheckboxItem>

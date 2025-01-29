@@ -1,16 +1,16 @@
 import React, { useState } from "react";
-import { Field } from "../ui/field";
-import { Button, Input, VStack } from "@chakra-ui/react";
+import { Box, Button, defineStyle, Input, VStack, Field, IconButton } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
 import AuthService, { LoginRequest } from "../../service/AuthService";
 import { useNavigate } from "react-router-dom";
-import ErrorAlert from "../alert/ErrorAlert";
-import { FormControl } from "@chakra-ui/form-control";
+import { toaster } from "../ui/toaster";
+import { FiEye, FiEyeOff } from "react-icons/fi";
 
 const LoginForm: React.FC = () => {
     const navigate = useNavigate();
-    const { register, handleSubmit, formState: { errors } } = useForm<LoginRequest>();
-    const [errorMessage, setErrorMessage] = useState<string>("");
+    const { register, handleSubmit } = useForm<LoginRequest>();
+    const [showPassword, setShowPassword] = useState(false);
+
 
     const onSubmit = async (data: LoginRequest) => {
         try {
@@ -23,42 +23,55 @@ const LoginForm: React.FC = () => {
             window.location.reload();
         } catch (error: any) {
             console.error("Erro ao fazer login:", error);
-            setErrorMessage("Credenciais inválidas. Tente novamente.");
+            toaster.create({
+                title: "Erro ao realizar o cadastro.",
+                type: "error",
+            });
         }
     };
 
     return (
         <>
-            <form onSubmit={handleSubmit(onSubmit)}>
-                <VStack gap="5" align="center" maxW="sm">
-                    <FormControl id="nome" isRequired className="control">
-                        <Field
-                            label="E-mail"
-                            invalid={!!errors.email}
-                            errorText={errors.email?.message}
-                        >
+            <form onSubmit={handleSubmit(onSubmit)} style={{ padding: "1em", width: "100%" }}>
+                <VStack gap="5" align="center" p={2}>
+                    <Field.Root>
+                        <Box pos="relative" w="full">
                             <Input
+                                className="peer"
+                                placeholder=""
                                 type="email"
-                                {...register("email", { required: "Preencha o campo de e-mail." })}
-                                placeholder="fulano@gmail.com"
+                                {...register("email")} />
+                            <Field.Label css={floatingStyles}>E-mail</Field.Label>
+                        </Box>
+                    </Field.Root>
+
+                    <Field.Root>
+                        <Box pos="relative" w="full">
+                            <Input
+                                className="peer"
+                                type={showPassword ? "text" : "password"}
+                                {...register("senha", { required: "Preencha o campo de senha." })}
+                                placeholder=""
                             />
-                        </Field>
-                    </FormControl>
-                    <Field
-                        label="Senha"
-                        invalid={!!errors.senha}
-                        errorText={errors.senha?.message}
-                    >
-                        <Input
-                            type="password"
-                            {...register("senha", { required: "Preencha o campo de senha." })}
-                            placeholder="fulano123"
-                        />
-                    </Field>
-                    {errorMessage && (
-                        <ErrorAlert message={errorMessage} onClose={() => setErrorMessage("")} />
-                    )}
-                    <Button type="submit" className="button-entrar">Entrar</Button>
+                            <IconButton
+                                pos="absolute"
+                                top="50%"
+                                right="1rem"
+                                transform="translateY(-50%)"
+                                size="xs"
+                                aria-label={showPassword ? "Ocultar senha" : "Mostrar senha"}
+                                onClick={() => setShowPassword(!showPassword)}
+                                variant="ghost"
+                                bg={"transparent"}
+                                _hover={{bg:"gray.200"}}
+                                >
+
+                                {showPassword ? <FiEyeOff /> : <FiEye />}
+                            </IconButton>
+                            <Field.Label css={floatingStyles}>Senha</Field.Label>
+                        </Box>
+                    </Field.Root>
+                    <Button type="submit" className="button">Entrar</Button>
                 </VStack>
             </form>
         </>
@@ -66,3 +79,25 @@ const LoginForm: React.FC = () => {
 };
 
 export default LoginForm;
+
+
+const floatingStyles = defineStyle({
+    pos: "absolute",
+    bg: "bg",
+    px: "0.5",
+    top: "-3",
+    insetStart: "2",
+    fontWeight: "normal",
+    pointerEvents: "none",
+    transition: "all 0.2s ease",
+    _peerPlaceholderShown: {
+        color: "fg.muted",
+        top: "2.5",
+        insetStart: "3",
+    },
+    _peerFocusVisible: {
+        color: "fg",
+        top: "-3",
+        insetStart: "2",
+    },
+});

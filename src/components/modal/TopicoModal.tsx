@@ -9,7 +9,7 @@ const AdicionarTopico = () => {
 
   return (
     <>
-      <Button onClick={onOpen} className="add-topic-button">
+      <Button onClick={onOpen} className="button">
         Adicionar Tópico
       </Button>
 

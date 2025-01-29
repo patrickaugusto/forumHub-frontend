@@ -1,8 +1,8 @@
 :root {
   --primary-color: #3b82f6; 
   --primary-hover: #2563eb;
-  --text-color: #04286E;
-  --background: linear-gradient(180deg, #dcf0fc 0%, #b4b9e9 100%);
+  --text-color: #424242;
+  --background: #fafafa;
   --secondary-color: #64748b; 
 
   font-family: 'Inter', system-ui, Avenir, Helvetica, Arial, sans-serif;
@@ -15,6 +15,7 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing:var(--primary-color);
 }
+
 
 body {
   margin: 0;
@@ -37,7 +38,11 @@ a:hover {
   color: var(--primary-hover);
 }
 
-input, textarea {
+input[type='text'],
+input[type='password'],
+input[type='email'],
+input,
+ textarea {
   width: 100%;
   border: 1px solid #e5e7eb;
   border-radius: 8px;
@@ -56,3 +61,6 @@ textarea:focus {
   box-shadow: 0 0 0 2px var(--primary-color);
 }
 
+.button{
+  background: var(--primary-color);
+}

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import AdicionarTopico from "../components/modal/TopicoModal";
 import TopicoService, { TopicoResponse } from "../service/TopicoService";
-import { Box, VStack, Spinner, HStack, Flex, Text, Button } from "@chakra-ui/react";
+import { Box, VStack, HStack, Flex, Text, Button, Stack } from "@chakra-ui/react";
 import {
   PaginationItems,
   PaginationNextTrigger,
@@ -19,6 +19,7 @@ import {
   MenuTrigger,
 } from "../components/ui/menu";
 import { HiSortAscending } from "react-icons/hi";
+import { Skeleton} from "../components/ui/skeleton"
 
 const pageSize = 10;
 
@@ -54,7 +55,7 @@ const Home = () => {
   const changeOrder = (value: string) => {
     setOrder(value);
   };
-  
+
 
 
   useEffect(() => {
@@ -67,11 +68,13 @@ const Home = () => {
       <Box className="home-container" gap="4" m={"auto"} justifyContent={"center"}>
         <Box className="main-content" maxW={"1000px"}>
 
-          <Box className="scrollable-box" mb={5}>
+          <Box className="scrollable-box" pb={5}>
             {loading ? (
-              <Flex justifyContent="center" h="100%">
-                <Spinner size="lg" color="blue.500" />
-              </Flex>
+              <Stack gap="6" w={"full"}>
+                {Array.from({ length: 3 }).map((_, index) => (
+                  <Skeleton key={index} w={"full"} height="100px" />
+                ))}
+              </Stack>
             ) : error ? (
               <Flex justifyContent="center" alignItems="center" h="100%">
                 <Text color="red.500">{error}</Text>
@@ -79,7 +82,9 @@ const Home = () => {
             ) : topicos.length > 0 ? (
               <VStack gap="6" align="stretch">
                 {topicos.map((topico) => (
-                  <TopicoDialog key={topico.id} topico={topico} />
+                  <Box w={"full"} shadow={"md"} borderRadius={10}>
+                    <TopicoDialog key={topico.id} topico={topico}/>
+                  </Box>
                 ))}
               </VStack>
             ) : (
@@ -104,36 +109,36 @@ const Home = () => {
           </PaginationRoot>
         </Box>
 
-        <Flex 
+        <Flex
           gap={5}
           wrap={"wrap"}
         >
 
-        <MenuRoot>
-          <MenuTrigger asChild border={"none"}>
-            <Button variant="outline" size="sm">
-              <HiSortAscending /> Ordenar
-            </Button>
-          </MenuTrigger>
-          <MenuContent minW="10rem">
-            <MenuRadioItemGroup value={order}>
-              <MenuRadioItem value="desc" onClick={() => changeOrder("desc")}>
-                Mais Recentes
-              </MenuRadioItem>
-              <MenuRadioItem value="asc" onClick={() => changeOrder("asc")}>
-                Mais Antigos
-              </MenuRadioItem>
-            </MenuRadioItemGroup>
-          </MenuContent>
-        </MenuRoot>
+          <MenuRoot>
+            <MenuTrigger asChild border={"none"}>
+              <Button variant="outline" size="sm">
+                <HiSortAscending /> Ordenar
+              </Button>
+            </MenuTrigger>
+            <MenuContent minW="10rem">
+              <MenuRadioItemGroup value={order}>
+                <MenuRadioItem value="desc" onClick={() => changeOrder("desc")}>
+                  Mais Recentes
+                </MenuRadioItem>
+                <MenuRadioItem value="asc" onClick={() => changeOrder("asc")}>
+                  Mais Antigos
+                </MenuRadioItem>
+              </MenuRadioItemGroup>
+            </MenuContent>
+          </MenuRoot>
 
-        {localStorage.getItem("token") && (
-          <Box className="box-button">
-            <AdicionarTopico />
-          </Box>
-        )}
+          {localStorage.getItem("token") && (
+            <Box className="box-button">
+              <AdicionarTopico />
+            </Box>
+          )}
         </Flex>
-      </Box>
+      </Box >
     </>
   );
 };
